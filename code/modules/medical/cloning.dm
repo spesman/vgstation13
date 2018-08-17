@@ -228,6 +228,15 @@
 	occupant = H
 	H.times_cloned = R.times_cloned +1
 
+	var/list/limbs = list(LIMB_LEFT_ARM,LIMB_RIGHT_ARM,LIMB_LEFT_HAND,LIMB_RIGHT_HAND,LIMB_LEFT_LEG,LIMB_RIGHT_LEG,LIMB_LEFT_FOOT,LIMB_RIGHT_FOOT)
+
+	var/limbs_to_remove = min(rand(0, 2 + H.times_cloned), limbs.len)
+	for(var/i=0,i<=limbs_to_remove,i++)
+		var picked_limb = pick_n_take(limbs)
+		var/datum/organ/external/limb = H.organs_by_name[picked_limb]
+		if(limb)
+			limb.droplimb(1,1,0,0)
+
 	if(!connected.emagged)
 		icon_state = "pod_1"
 	else
